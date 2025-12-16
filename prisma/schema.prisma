@@ -10,6 +10,7 @@ datasource db {
 model Fortune {
   id        Int      @id @default(autoincrement())
   text      String
-  category  String?
+  category  String @default("general")
+  type      String @default("unfortunate")
   createdAt DateTime @default(now())
 }

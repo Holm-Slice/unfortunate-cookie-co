@@ -1,6 +1,5 @@
-import { ReloadResponse } from "./../../node_modules/typescript/lib/typescript.d";
 /* This imports the PrismaClient from the installed prisma package*/
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 /*
 This creates a place to store our db connection globally
