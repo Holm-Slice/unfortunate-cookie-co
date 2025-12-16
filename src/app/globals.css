@@ -7,6 +7,45 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Japanese";
+  src: url("/fonts/Japanese-3017.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-japanese {
+  font-family: "Japanese", sans-serif;
+}
+
+/* Scale animation for the dot buttons */
+.hover-grow:hover {
+  transform: translateX(-50%) scale(1.2);
+}
+
+/* Shake animation for the dot button */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-50%) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(5deg);
+  }
+  75% {
+    transform: translateX(-50%) rotate(-5deg);
+  }
+}
+
+.hover-shake:hover {
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+/* ...existing code... */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

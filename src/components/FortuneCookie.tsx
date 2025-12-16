@@ -82,38 +82,63 @@ export function FortuneCookie() {
       >
         {/* White Half (Right Side) */}
         <div className="absolute top-0 right-0 w-1/2 h-full bg-white" />
-
         {/* Black Half (Left Side) */}
         <div className="absolute top-0 left-0 w-1/2 h-full bg-black" />
-
         {/* White Bulge (Top) - curves into black side */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[35vmin] h-[35vmin] rounded-full bg-white" />
-
         {/* Black Bulge (Bottom) - curves into white side */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[35vmin] h-[35vmin] rounded-full bg-black" />
 
-        {/* Black Dot (in white section - top) */}
-        <div className="absolute top-[8vmin] left-1/2 -translate-x-1/2 w-[8vmin] h-[8vmin] rounded-full bg-black" />
-
-        {/* White Dot (in black section - bottom) */}
-        <div className="absolute bottom-[8vmin] left-1/2 -translate-x-1/2 w-[8vmin] h-[8vmin] rounded-full bg-white" />
+        {/* Black Dot (in white section - top) - SWITCHES TO DARK/UNFORTUNATE */}
+        <button
+          onClick={() => {
+            if (!isLightMode) return; /* Only works in light mode */
+            toggleMode();
+          }}
+          disabled={isAnimating}
+          className={`absolute top-[8vmin] left-1/2 w-[8vmin] h-[8vmin] rounded-full bg-black z-10 transition-transform duration-200 ${
+            isLightMode ? "cursor-pointer" : "cursor-default"
+          }`}
+          style={{
+            transform: `translateX(-50%) rotate(${-rotation}deg)`,
+          }}
+          onMouseEnter={(e) => {
+            if (isLightMode) {
+              e.currentTarget.style.transform = `translateX(-50%) rotate(${-rotation}deg) scale(1.2)`;
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = `translateX(-50%) rotate(${-rotation}deg)`;
+          }}
+          aria-label="Switch to unfortunate mode"
+        />
+        {/* White Dot (in black section - bottom) - SWITCHES TO LIGHT/FORTUNATE */}
+        <button
+          onClick={() => {
+            if (isLightMode) return; /* Only works in dark mode */
+            toggleMode();
+          }}
+          disabled={isAnimating}
+          className={`absolute bottom-[8vmin] left-1/2 w-[8vmin] h-[8vmin] rounded-full bg-white z-10 transition-transform duration-200 ${
+            !isLightMode ? "cursor-pointer" : "cursor-default"
+          }`}
+          style={{
+            transform: `translateX(-50%) rotate(${-rotation}deg)`,
+          }}
+          onMouseEnter={(e) => {
+            if (!isLightMode) {
+              e.currentTarget.style.transform = `translateX(-50%) rotate(${-rotation}deg) scale(1.2)`;
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = `translateX(-50%) rotate(${-rotation}deg)`;
+          }}
+          aria-label="Switch to fortunate mode"
+        />
       </div>
 
-      {/* BUTTONS */}
+      {/* BUTTONS - Only Get Fortune button now */}
       <div className="flex gap-4 mt-8">
-        {/* Toggle Mode Button */}
-        <button
-          onClick={toggleMode}
-          disabled={isAnimating}
-          className={`px-6 py-3 rounded-full text-lg font-bold transition-all duration-300 hover:scale-105 disabled:opacity-50 ${
-            isLightMode
-              ? "bg-black text-white hover:bg-gray-800"
-              : "bg-white text-black hover:bg-gray-200"
-          }`}
-        >
-          {isAnimating ? "🔄" : isLightMode ? "🌑 Go Dark" : "☀️ Go Light"}
-        </button>
-
         {/* Get Fortune Button */}
         <button
           onClick={getFortune}
