@@ -149,7 +149,7 @@ export function FortuneCookie() {
               : "bg-gray-700 text-white hover:bg-gray-600"
           }`}
         >
-          {isLoading ? "🔮..." : "🥠 Get Fortune"}
+          {isLoading ? "🔮..." : isLightMode ? "☀️ FAFO" : "🌑 FAFO"}
         </button>
       </div>
 
