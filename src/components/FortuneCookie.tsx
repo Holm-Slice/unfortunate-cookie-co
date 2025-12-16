@@ -26,6 +26,7 @@ export function FortuneCookie() {
       setIsAnimating(false);
     }, 1000);
   }
+
   /* Get fortune based on current mode */
   async function getFortune() {
     if (isAnimating || isLoading) return;
@@ -92,7 +93,7 @@ export function FortuneCookie() {
         {/* Black Dot (in white section - top) - SWITCHES TO DARK/UNFORTUNATE */}
         <button
           onClick={() => {
-            if (!isLightMode) return; /* Only works in light mode */
+            if (!isLightMode) return;
             toggleMode();
           }}
           disabled={isAnimating}
@@ -112,10 +113,11 @@ export function FortuneCookie() {
           }}
           aria-label="Switch to unfortunate mode"
         />
+
         {/* White Dot (in black section - bottom) - SWITCHES TO LIGHT/FORTUNATE */}
         <button
           onClick={() => {
-            if (isLightMode) return; /* Only works in dark mode */
+            if (isLightMode) return;
             toggleMode();
           }}
           disabled={isAnimating}
@@ -135,54 +137,60 @@ export function FortuneCookie() {
           }}
           aria-label="Switch to fortunate mode"
         />
-      </div>
 
-      {/* BUTTONS - Only Get Fortune button now */}
-      <div className="flex gap-4 mt-8">
-        {/* Get Fortune Button */}
-        <button
-          onClick={getFortune}
-          disabled={isAnimating || isLoading}
-          className={`px-6 py-3 rounded-full text-lg font-bold transition-all duration-300 hover:scale-105 disabled:opacity-50 ${
-            isLightMode
-              ? "bg-amber-400 text-black hover:bg-amber-300"
-              : "bg-gray-700 text-white hover:bg-gray-600"
-          }`}
-        >
-          {isLoading ? "🔮..." : isLightMode ? "☀️ FAFO" : "🌑 FAFO"}
-        </button>
-      </div>
-
-      {/* Fortune Display */}
-      {fortune && !isAnimating && (
+        {/* CENTER CONTENT - Button + Fortune Display */}
         <div
-          className={`max-w-md p-6 rounded-lg text-center mt-8 transition-colors duration-1000 ${
-            isLightMode
-              ? "bg-amber-100 text-black border border-amber-300"
-              : "bg-gray-800 text-white border border-gray-700"
-          }`}
+          className="absolute top-1/2 left-1/2 flex flex-col items-center gap-4 z-20"
+          style={{
+            transform: `translate(-50%, -50%) rotate(${-rotation}deg)`,
+          }}
         >
-          <p className="text-xl italic mb-2">&quot;{fortune.text}&quot;</p>
-          <div className="flex justify-center gap-4 text-sm opacity-70">
-            <span>Category: {fortune.category}</span>
-            <span>•</span>
-            <span>
-              {fortune.type === "fortunate" ? "☀️ Fortunate" : "🌑 Unfortunate"}
-            </span>
-          </div>
-        </div>
-      )}
+          {/* GET FORTUNE BUTTON */}
+          <button
+            onClick={getFortune}
+            disabled={isAnimating || isLoading}
+            className={`px-6 py-3 rounded-full text-lg font-bold transition-all duration-300 hover:scale-110 disabled:opacity-50 backdrop-blur-sm ${
+              isLightMode
+                ? "bg-white/30 text-black border border-black/20 hover:bg-white/50"
+                : "bg-black/30 text-white border border-white/20 hover:bg-black/50"
+            }`}
+            style={{ fontFamily: "Japanese" }}
+          >
+            {isLoading ? "🔮..." : isLightMode ? "FAFO" : "FAFO"}
+          </button>
 
-      {/* Loading State */}
-      {isLoading && (
-        <p
-          className={`mt-8 transition-colors duration-1000 ${
-            isLightMode ? "text-gray-700" : "text-gray-400"
-          }`}
-        >
-          The universe is deciding...
-        </p>
-      )}
+          {/* Fortune Display */}
+          {fortune && !isAnimating && (
+            <div
+              className={`w-[50vmin] p-4 rounded-lg text-center backdrop-blur-sm ${
+                isLightMode
+                  ? "bg-white/50 text-black border border-black/20"
+                  : "bg-black/50 text-white border border-white/20"
+              }`}
+              style={{ fontFamily: "Japanese" }}
+            >
+              <p className="text-lg italic mb-2">&quot;{fortune.text}&quot;</p>
+              <div className="flex justify-center gap-2 text-xs opacity-70">
+                {/* <span>{fortune.category}</span>
+                <span>•</span>
+                <span>{fortune.type === "fortunate" ? "☀️" : "🌑"}</span> */}
+              </div>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {isLoading && (
+            <p
+              className={`text-sm ${
+                isLightMode ? "text-black/70" : "text-white/70"
+              }`}
+              style={{ fontFamily: "Japanese" }}
+            >
+              The universe is deciding...
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
